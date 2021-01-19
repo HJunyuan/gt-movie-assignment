@@ -1,4 +1,5 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Menu() {
   return (
@@ -6,8 +7,9 @@ function Menu() {
       <Container>
         <Navbar.Brand>🎬</Navbar.Brand>
         <Nav className="mr-auto">
-          {/* TODO: Replace with React Router Link */}
-          <Nav.Link href="/">Main</Nav.Link>
+          <Nav.Link as={Link} to="/">
+            Main
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

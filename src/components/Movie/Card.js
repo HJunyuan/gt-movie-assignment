@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Badge, Card } from "react-bootstrap";
 
 function MovieCard(props) {
@@ -16,8 +17,7 @@ function MovieCard(props) {
           <Badge variant="info">{genre}</Badge>
         </Card.Subtitle>
         <Card.Text>{synopsisShort}</Card.Text>
-        {/* TODO: Replace with React Router Link */}
-        <Card.Link href="">More details</Card.Link>
+        <Card.Link as={Link}>More details</Card.Link>
       </Card.Body>
       {/* TODO: Use date-fns */}
       <Card.Footer className="text-muted">{productionYear}</Card.Footer>
