@@ -1,14 +1,17 @@
-import Menu from "./components/Menu";
-import Main from "./views/Main";
+import { BrowserRouter } from "react-router-dom";
 
+import Menu from "./components/Menu";
 import { MovieProvider } from "./contexts/MovieContext";
+import routes from "./routes";
 
 function App() {
   return (
-    <MovieProvider>
-      <Menu />
-      <Main />
-    </MovieProvider>
+    <BrowserRouter>
+      <MovieProvider>
+        <Menu />
+        {routes}
+      </MovieProvider>
+    </BrowserRouter>
   );
 }
 
