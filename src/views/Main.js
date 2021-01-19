@@ -1,16 +1,26 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 
 import { MovieContext } from "../contexts/MovieContext";
 
-function Main() {
-  const movies = useContext(MovieContext);
+import { MovieCard, MovieGrid } from "../components/Movie";
 
-  if (!movies.isReady) {
+function Main() {
+  const { isReady, movies } = useContext(MovieContext);
+  const [movieCards, setMovieCards] = useState([]);
+
+  useEffect(() => {
+    if (!isReady) return;
+
+    const cards = movies.map((movie, i) => <MovieCard key={i} {...movie} />);
+    setMovieCards(cards);
+  }, [isReady, movies]);
+
+  if (!isReady) {
     return <Container>Loading...</Container>;
   }
 
-  return <Container>{JSON.stringify(movies)}</Container>;
+  return <Container>{<MovieGrid>{movieCards}</MovieGrid>}</Container>;
 }
 
 export default Main;
