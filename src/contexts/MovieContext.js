@@ -5,16 +5,14 @@ import getMovies from "../api/getMovies";
 export const MovieContext = createContext();
 
 export const MovieProvider = ({ children }) => {
-  const [movies, setMovies] = useState({ isReady: false });
+  const [data, setData] = useState({ isReady: false });
 
   useEffect(() => {
     (async function () {
       const data = await getMovies();
-      setMovies({ isReady: true, ...data });
+      setData({ isReady: true, movies: data });
     })();
   }, []);
 
-  return (
-    <MovieContext.Provider value={movies}>{children}</MovieContext.Provider>
-  );
+  return <MovieContext.Provider value={data}>{children}</MovieContext.Provider>;
 };
