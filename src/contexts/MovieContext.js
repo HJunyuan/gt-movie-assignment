@@ -9,8 +9,20 @@ export const MovieProvider = ({ children }) => {
 
   useEffect(() => {
     (async function () {
-      const data = await getMovies();
-      setData({ isReady: true, movies: data });
+      const movies = await getMovies();
+
+      const uniqueYears = new Set(movies.map((movie) => movie.productionYear));
+      const sortedYears = Array.from(uniqueYears).sort();
+
+      const uniqueGenres = new Set(movies.map((movie) => movie.genre));
+      const sortedGenres = Array.from(uniqueGenres).sort();
+
+      setData({
+        isReady: true,
+        movies,
+        years: sortedYears,
+        genres: sortedGenres,
+      });
     })();
   }, []);
 

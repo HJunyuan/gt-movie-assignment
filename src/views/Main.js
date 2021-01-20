@@ -6,18 +6,10 @@ import { MovieContext } from "../contexts/MovieContext";
 import { MovieCard, MovieGrid } from "../components/Movie";
 import { GenreFilter } from "../components/Filter";
 
-function initMovieReducer(movies) {
-  const uniqueYears = new Set(movies.map((movie) => movie.productionYear));
-  const sortedYears = Array.from(uniqueYears).sort();
-
-  const uniqueGenres = new Set(movies.map((movie) => movie.genre));
-  const sortedGenres = Array.from(uniqueGenres).sort();
-
+function initMovieReducer(movies = []) {
   return {
     allMovies: movies,
     filtered: movies,
-    years: sortedYears,
-    genres: sortedGenres,
   };
 }
 
@@ -40,7 +32,7 @@ function movieReducer(state, action) {
 }
 
 function Main() {
-  const { isReady = false, movies = [] } = useContext(MovieContext);
+  const { isReady, movies, genres, years } = useContext(MovieContext);
   const [movieDictionary, dispatchMovieFilter] = useReducer(
     movieReducer,
     movies,
@@ -60,7 +52,7 @@ function Main() {
   return (
     <Container>
       <GenreFilter
-        allGenres={movieDictionary.genres}
+        allGenres={genres}
         onSelect={(genre) => {
           dispatchMovieFilter({ type: "filter-genre", genre });
         }}
