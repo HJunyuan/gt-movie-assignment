@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Dropdown, DropdownButton, InputGroup } from "react-bootstrap";
 
 const ALL_TEXT = "All Genres";
 
@@ -22,10 +22,14 @@ function GenreFilter(props) {
   ));
 
   return (
-    <Dropdown>
-      <Dropdown.Toggle className="mb-3">{selectedGenre}</Dropdown.Toggle>
-      <Dropdown.Menu>{dropdownItems}</Dropdown.Menu>
-    </Dropdown>
+    <InputGroup>
+      <InputGroup.Prepend>
+        <InputGroup.Text>Filter by genre:</InputGroup.Text>
+      </InputGroup.Prepend>
+      <DropdownButton as={InputGroup.Append} title={selectedGenre}>
+        {dropdownItems}
+      </DropdownButton>
+    </InputGroup>
   );
 }
 

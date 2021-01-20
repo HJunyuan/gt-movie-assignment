@@ -27,12 +27,23 @@ function YearFilter(props) {
             graduated
             progress
             renderMark={(mark) => mark}
-            onChange={(val) => setYearRange(val)}
+            onChange={(val) => {
+              setYearRange(val);
+              onChange(range(...val));
+            }}
           />
         </InputGroup.Text>
       </InputGroup.Append>
     </InputGroup>
   );
+}
+
+function range(lowEnd, highEnd) {
+  const list = [];
+  for (let i = lowEnd; i <= highEnd; i++) {
+    list.push(i);
+  }
+  return list;
 }
 
 export default YearFilter;
