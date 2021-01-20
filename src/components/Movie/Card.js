@@ -19,7 +19,7 @@ function MovieCard(props) {
           <Badge variant="info">{genre}</Badge>
         </Card.Subtitle>
         <Card.Text>{truncate(synopsisShort, WORD_LIMIT)}</Card.Text>
-        <Card.Link as={Link} to="">
+        <Card.Link as={Link} to={`movie/${productionYear}/${encodeURI(name)}`}>
           More details
         </Card.Link>
       </Card.Body>
