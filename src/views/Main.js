@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import { MovieContext } from "../contexts/MovieContext";
 
@@ -103,7 +103,10 @@ function Main() {
   );
 }
 
-function genMovieCards(movies = []) {
+function genMovieCards(movies) {
+  if (!movies || movies.length === 0) {
+    return <p>Sorry, there are no movies that matches your filter.</p>;
+  }
   return movies.map((movie, i) => <MovieCard key={i} {...movie} />);
 }
 
