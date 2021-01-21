@@ -21,7 +21,7 @@ function Main() {
 
   return (
     <Container>
-      <h1>Movies</h1>
+      <h1 className="mt-4">Movies</h1>
       <Panel
         className="my-4"
         header="Filters"
@@ -54,7 +54,6 @@ function Main() {
           </div>
         </PanelGrid>
       </Panel>
-
       <MovieGrid>{filteredMovies(movies, filterParams)}</MovieGrid>
     </Container>
   );
