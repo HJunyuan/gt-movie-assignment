@@ -74,7 +74,11 @@ function filteredMovies(movies, { genres, years }) {
 
 function genMovieCards(movies) {
   if (!movies || movies.length === 0) {
-    return <p>Sorry, there are no movies that matches your filter.</p>;
+    return (
+      <NoMovies>
+        <p>Sorry, there are no movies that matches your filter.</p>
+      </NoMovies>
+    );
   }
   return movies.map((movie, i) => <MovieCard key={i} {...movie} />);
 }
@@ -95,6 +99,15 @@ const PanelGrid = styled.div`
   grid-column-gap: 1rem;
   grid-row-gap: 2rem;
   overflow-x: auto;
+`;
+
+const NoMovies = styled.div`
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  height: 30vh;
 `;
 
 export default Main;
