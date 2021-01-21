@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { Grid, Panel } from "rsuite";
+import { Panel } from "rsuite";
+import styled from "styled-components";
 
 import { MovieContext } from "../contexts/MovieContext";
 
 import { MovieCard, MovieGrid } from "../components/Movie";
 import { GenreFilter, YearFilter } from "../components/Filter";
-import styled from "styled-components";
+import { Container } from "../components/Container";
 
 function Main() {
   const { isReady, movies, genres, years } = useContext(MovieContext);
@@ -19,7 +20,7 @@ function Main() {
   }, [isReady, genres, years]);
 
   return (
-    <Grid>
+    <Container>
       <h1>Movies</h1>
       <Panel
         className="my-4"
@@ -55,7 +56,7 @@ function Main() {
       </Panel>
 
       <MovieGrid>{filteredMovies(movies, filterParams)}</MovieGrid>
-    </Grid>
+    </Container>
   );
 }
 
@@ -80,7 +81,7 @@ function genMovieCards(movies) {
 }
 
 function mockup() {
-  const count = 6;
+  const count = 8;
   const mockups = [];
 
   for (let i = 0; i < count; i++) mockups.push(<MovieCard key={i} mockup />);
