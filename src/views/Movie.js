@@ -3,6 +3,7 @@ import { useParams, Redirect } from "react-router-dom";
 import { Badge, Placeholder } from "rsuite";
 import styled from "styled-components";
 import DOMPurify from "dompurify";
+import { formatDistance } from "date-fns";
 
 import { MovieContext } from "../contexts/MovieContext";
 import generateGenreColour from "../utilities/genreColour";
@@ -58,7 +59,8 @@ function MovieView() {
         />
         <h1 className="my-2">{name}</h1>
         <p>
-          <b>Production Year</b>: {year}
+          <b>Production Year</b>:{" "}
+          {`${year} (${formatDistance(new Date(year, 0), new Date())} ago)`}
         </p>
         <StyledBadge className="my-2" content={genre} />
         <br />

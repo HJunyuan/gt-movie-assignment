@@ -40,10 +40,8 @@ function MovieCard(props) {
         <CardBadge className="mb-2" content={genre} />
         <CardDescription>{truncate(synopsisShort, WORD_LIMIT)}</CardDescription>
         <CardFooter>
-          <p>{formatDistance(new Date(productionYear, 0), new Date())}</p>
-          <IconButton icon={<Icon icon="arrow-right" />} placement="right">
-            Read more
-          </IconButton>
+          <p>{formatDistance(new Date(productionYear, 0), new Date())} ago</p>
+          <IconButton icon={<Icon icon="arrow-right" />} placement="right" />
         </CardFooter>
       </Card>
     </Card>
