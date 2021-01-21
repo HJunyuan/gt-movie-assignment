@@ -4,6 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "rsuite/dist/styles/rsuite-default.css";
+import "./spacing.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
