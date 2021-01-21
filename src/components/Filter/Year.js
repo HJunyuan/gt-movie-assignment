@@ -1,40 +1,31 @@
 import { useState } from "react";
-import { InputGroup } from "react-bootstrap";
-import { RangeSlider } from "rsuite";
+import { RangeSlider, Placeholder } from "rsuite";
 
 function YearFilter(props) {
-  const { minYear, maxYear, onChange = () => {} } = props;
+  const { allYears, onChange, className } = props;
 
-  const [yearRange, setYearRange] = useState([minYear, maxYear]);
+  const minMax = allYears && [allYears[0], allYears[allYears.length - 1]];
+
+  if (!minMax) {
+    return <Placeholder.Paragraph rows={1} />;
+  }
 
   return (
-    <InputGroup>
-      <InputGroup.Prepend>
-        <InputGroup.Text>Filter by year:</InputGroup.Text>
-      </InputGroup.Prepend>
-      <InputGroup.Append>
-        <InputGroup.Text
-          className="py-3 px-5"
-          style={{ background: "#ffffff" }}
-          as="div"
-        >
-          <RangeSlider
-            style={{ width: "200px" }}
-            defaultValue={yearRange}
-            step={3}
-            min={minYear}
-            max={maxYear}
-            graduated
-            progress
-            renderMark={(mark) => mark}
-            onChange={(val) => {
-              setYearRange(val);
-              onChange(range(...val));
-            }}
-          />
-        </InputGroup.Text>
-      </InputGroup.Append>
-    </InputGroup>
+    <RangeSlider
+      className={className + " ml-3 mr-4"}
+      graduated
+      progress
+      defaultValue={minMax}
+      min={minMax[0]}
+      max={minMax[1]}
+      renderMark={(mark) => {
+        if (minMax.includes(mark)) return String(mark);
+        else if (mark % 2 !== 0) return <small>{String(mark)}</small>;
+      }}
+      onChange={(selected) => {
+        onChange(range(...selected));
+      }}
+    />
   );
 }
 
