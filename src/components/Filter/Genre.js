@@ -1,20 +1,14 @@
-import { useState } from "react";
 import { CheckTreePicker } from "rsuite";
 
 const DEFAULT_VALUE = "All Genres";
 
 function GenreFilter(props) {
-  const { allGenres, onChange, className } = props;
-  const [selected, setSelected] = useState([DEFAULT_VALUE]);
+  const { allGenres, selected, onChange, className } = props;
 
   const dropdownItems = allGenres?.map((genre) => ({
     label: genre,
     value: genre,
   }));
-
-  // useEffect(() => {
-  //   console.log(selected);
-  // }, [selected]);
 
   return (
     <CheckTreePicker
@@ -29,9 +23,7 @@ function GenreFilter(props) {
         },
       ]}
       value={selected}
-      // defaultValue={}
       onChange={(selected) => {
-        setSelected(selected);
         onChange(selected);
       }}
     />

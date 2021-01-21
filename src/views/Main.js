@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Panel } from "rsuite";
+import { Icon, IconButton, Panel } from "rsuite";
 import styled from "styled-components";
 
 import { MovieContext } from "../contexts/MovieContext";
@@ -8,16 +8,18 @@ import { MovieCard, MovieGrid } from "../components/Movie";
 import { GenreFilter, YearFilter } from "../components/Filter";
 import { Container } from "../components/Container";
 
+const DEFAULT_GENRE = ["All Genres"];
+
 function Main() {
   const { isReady, movies, genres, years } = useContext(MovieContext);
-  const [filterParams, setFilterParams] = useState({ genres, years });
+  const [filterParams, setFilterParams] = useState({ genres: DEFAULT_GENRE });
 
   /* Initialise filterParams when isReady */
   useEffect(() => {
     if (isReady) {
-      setFilterParams({ genres, years });
+      setFilterParams((o) => ({ ...o, yearStartEnd: [0, years.length - 1] }));
     }
-  }, [isReady, genres, years]);
+  }, [isReady, years]);
 
   return (
     <Container>
@@ -25,7 +27,7 @@ function Main() {
       <Panel
         className="my-4"
         header="Filters"
-        defaultExpanded={false}
+        defaultExpanded={true}
         collapsible
         bordered
       >
@@ -36,8 +38,9 @@ function Main() {
             </p>
             <YearFilter
               allYears={years}
+              selected={filterParams.yearStartEnd}
               onChange={(selected) => {
-                setFilterParams((o) => ({ ...o, years: selected }));
+                setFilterParams((o) => ({ ...o, yearStartEnd: selected }));
               }}
             />
           </div>
@@ -47,28 +50,56 @@ function Main() {
             </p>
             <GenreFilter
               allGenres={genres}
+              selected={filterParams.genres}
               onChange={(selected) => {
                 setFilterParams((o) => ({ ...o, genres: selected }));
               }}
             />
           </div>
         </PanelGrid>
+        <IconButton
+          className="mt-5"
+          icon={<Icon icon="refresh" />}
+          placement="left"
+          onClick={() => {
+            setFilterParams({
+              genres: DEFAULT_GENRE,
+              yearStartEnd: [0, years.length - 1],
+            });
+          }}
+          disabled={
+            filterParams.genres === DEFAULT_GENRE &&
+            filterParams.yearStartEnd &&
+            filterParams.yearStartEnd[0] === 0 &&
+            filterParams.yearStartEnd[1] === years.length - 1
+          }
+        >
+          Reset filters
+        </IconButton>
       </Panel>
-      <MovieGrid>{filteredMovies(movies, filterParams)}</MovieGrid>
+      <MovieGrid>{filteredMovies(movies, filterParams, years)}</MovieGrid>
     </Container>
   );
 }
 
-function filteredMovies(movies, { genres, years }) {
-  if (!movies || !genres || !years) {
+function filteredMovies(movies, filterParams, years) {
+  const { genres, yearStartEnd } = filterParams;
+  if (!movies || !genres || !yearStartEnd) {
     return mockup();
   }
 
-  const filtered = movies.filter(
-    (movie) =>
+  const filtered = movies.filter((movie) => {
+    const destructedYears = [];
+
+    for (let i = yearStartEnd[0]; i <= yearStartEnd[1]; i++) {
+      destructedYears.push(years[i]);
+    }
+
+    return (
       (genres.includes(movie.genre) || genres.includes("All Genres")) &&
-      years.includes(movie.productionYear)
-  );
+      destructedYears.includes(movie.productionYear)
+    );
+  });
   return genMovieCards(filtered);
 }
 

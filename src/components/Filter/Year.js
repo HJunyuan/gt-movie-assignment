@@ -3,10 +3,8 @@ import { RangeSlider, Placeholder } from "rsuite";
 import debounce from "lodash/debounce";
 
 function YearFilter(props) {
-  const { allYears, onChange, className } = props;
+  const { allYears, selected, onChange, className } = props;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const minMax = allYears && [allYears[0], allYears[allYears.length - 1]];
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -21,36 +19,27 @@ function YearFilter(props) {
     };
   }, [handleResize]);
 
-  if (!minMax) {
+  if (!allYears) {
     return <Placeholder.Paragraph rows={1} />;
   }
 
   return (
     <RangeSlider
       className={className + " ml-3 mr-4"}
-      defaultValue={minMax}
-      min={minMax[0]}
-      max={minMax[1]}
-      step={windowWidth < 470 ? 3 : 1}
+      value={selected}
+      min={0}
+      max={allYears.length - 1}
       renderMark={(mark) => {
-        if (minMax.includes(mark) || windowWidth < 470) return String(mark);
-        else if (mark % 2 !== 0) return <small>{String(mark)}</small>;
+        if (mark === 0 || mark === allYears.length - 1 || windowWidth > 470)
+          return allYears[mark];
+        else return <small>{allYears[mark]}</small>;
       }}
-      onChange={(selected) => {
-        onChange(range(...selected));
-      }}
+      onChange={onChange}
+      tooltip={false}
       graduated
       progress
     />
   );
-}
-
-function range(lowEnd, highEnd) {
-  const list = [];
-  for (let i = lowEnd; i <= highEnd; i++) {
-    list.push(i);
-  }
-  return list;
 }
 
 export default YearFilter;
