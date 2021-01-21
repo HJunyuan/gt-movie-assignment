@@ -3,6 +3,8 @@ import { Badge, Panel, Placeholder, Icon, IconButton } from "rsuite";
 import styled from "styled-components";
 import { formatDistance } from "date-fns";
 
+import generateGenreColour from "../../utilities/genreColour";
+
 const WORD_LIMIT = 18;
 
 function MovieCard(props) {
@@ -15,13 +17,13 @@ function MovieCard(props) {
 
   if (mockup) {
     return (
-      <Panel shaded bodyFill style={{ width: "100%" }}>
+      <Card shaded bodyFill style={{ width: "100%" }}>
         <Placeholder.Graph height={300} active />
-        <Panel>
+        <Card>
           <Placeholder.Paragraph rows={1} rowHeight={25} />
           <Placeholder.Paragraph rows={4} rowMargin={3} />
-        </Panel>
-      </Panel>
+        </Card>
+      </Card>
     );
   }
 
@@ -76,7 +78,7 @@ const CardTitle = styled.h2`
 
 const CardBadge = styled(Badge)`
   padding: 0.2rem 0.4rem;
-  background: #4caf50;
+  background: ${({ content }) => generateGenreColour(content)};
 `;
 
 const CardDescription = styled.p`

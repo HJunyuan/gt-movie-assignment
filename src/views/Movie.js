@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DOMPurify from "dompurify";
 
 import { MovieContext } from "../contexts/MovieContext";
+import generateGenreColour from "../utilities/genreColour";
 
 import { Container } from "../components/Container";
 
@@ -73,5 +74,5 @@ export default MovieView;
 
 const StyledBadge = styled(Badge)`
   padding: 0.2rem 0.4rem;
-  background: #4caf50;
+  background: ${({ content }) => generateGenreColour(content)};
 `;
