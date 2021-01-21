@@ -1,19 +1,42 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { Navbar, Nav, Icon, Affix } from "rsuite";
+
+import { Container } from "../Container";
 
 function Menu() {
+  const history = useHistory();
+  const { pathname } = useLocation();
+
+  const navItems = () => {
+    /**
+     * Only display back button if:
+     * - Not root pathname
+     * - There is history
+     */
+    if (pathname !== "/" && history.length > 0) {
+      return (
+        <Nav.Item
+          icon={<Icon icon="angle-left" />}
+          onClick={() => history.goBack()}
+        >
+          Return to previous page
+        </Nav.Item>
+      );
+    } else {
+      /* Display main menu */
+      return <Nav.Item icon="🎬" />;
+    }
+  };
+
   return (
-    <Navbar className="mb-4" bg="light" variant="light" fixed="sticky">
-      <Container>
-        <Navbar.Brand>🎬</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/">
-            Main
-          </Nav.Link>
-        </Nav>
-      </Container>
-    </Navbar>
+    <Affix>
+      <Navbar>
+        <Container>
+          <Nav>{navItems()}</Nav>
+        </Container>
+      </Navbar>
+    </Affix>
   );
 }
 
-export default Menu;
+export { Menu };
