@@ -94,6 +94,7 @@ const PanelGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-column-gap: 1rem;
   grid-row-gap: 2rem;
+  overflow-x: auto;
 `;
 
 export default Main;
