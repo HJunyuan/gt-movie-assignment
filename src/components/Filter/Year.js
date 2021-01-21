@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RangeSlider, Placeholder } from "rsuite";
 
 function YearFilter(props) {

@@ -28,11 +28,12 @@ function MovieCard(props) {
   return (
     <Card shaded bodyFill onClick={onClick}>
       <img
+        alt={`${name} (${productionYear})`}
         style={{ width: "100%", height: 300, objectFit: "cover" }}
         src={`https://picsum.photos/seed/${image}/480`}
         draggable="false"
       />
-      <Panel>
+      <Card>
         <CardTitle>{`${name} (${productionYear})`}</CardTitle>
         <CardBadge className="mb-2" content={genre} />
         <CardDescription>{truncate(synopsisShort, WORD_LIMIT)}</CardDescription>
@@ -42,27 +43,8 @@ function MovieCard(props) {
             Read more
           </IconButton>
         </CardFooter>
-      </Panel>
+      </Card>
     </Card>
-    // <Card style={{ height: "100%", maxWidth: "18rem" }}>
-    //   <Card.Img
-    //     variant="top"
-    //     src={`https://picsum.photos/seed/${image}/300`}
-    //     draggable="false"
-    //   />
-    //   <Card.Body>
-    //     <Card.Title>{name}</Card.Title>
-    //     <Card.Subtitle className="mb-1">
-    //       <Badge variant="info">{genre}</Badge>
-    //     </Card.Subtitle>
-    //     <Card.Text>{truncate(synopsisShort, WORD_LIMIT)}</Card.Text>
-    //     <Card.Link as={Link} to={`movie/${productionYear}/${encodeURI(name)}`}>
-    //       More details
-    //     </Card.Link>
-    //   </Card.Body>
-    //   {/* TODO: Use date-fns */}
-    //   <Card.Footer className="text-muted">{productionYear}</Card.Footer>
-    // </Card>
   );
 }
 
@@ -87,6 +69,9 @@ const Card = styled(Panel)`
 
 const CardTitle = styled.h2`
   font-size: 1.4rem;
+  line-height: 1.7rem;
+
+  margin-bottom: 1rem;
 `;
 
 const CardBadge = styled(Badge)`

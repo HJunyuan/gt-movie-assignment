@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useParams, Redirect } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container } from "../components/Container";
 
 import { MovieContext } from "../contexts/MovieContext";
 
