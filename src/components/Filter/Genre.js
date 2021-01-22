@@ -1,35 +1,32 @@
-import { useState } from "react";
-import { Dropdown, DropdownButton, InputGroup } from "react-bootstrap";
+import { CheckTreePicker } from "rsuite";
 
-const ALL_TEXT = "All Genres";
+const DEFAULT_VALUE = "All Genres";
 
 function GenreFilter(props) {
-  const { allGenres = [], onSelect = () => {} } = props;
+  const { allGenres, selected, onChange, className } = props;
 
-  const [selectedGenre, setSelectedGenre] = useState(ALL_TEXT);
-
-  const dropdownItems = [ALL_TEXT, ...allGenres].map((genre, i) => (
-    <Dropdown.Item
-      key={i}
-      onClick={() => {
-        setSelectedGenre(genre);
-        onSelect(genre);
-      }}
-      active={selectedGenre === genre}
-    >
-      {genre}
-    </Dropdown.Item>
-  ));
+  const dropdownItems = allGenres?.map((genre) => ({
+    label: genre,
+    value: genre,
+  }));
 
   return (
-    <InputGroup>
-      <InputGroup.Prepend>
-        <InputGroup.Text>Filter by genre:</InputGroup.Text>
-      </InputGroup.Prepend>
-      <DropdownButton as={InputGroup.Append} title={selectedGenre}>
-        {dropdownItems}
-      </DropdownButton>
-    </InputGroup>
+    <CheckTreePicker
+      className={className}
+      defaultExpandAll={true}
+      block={true}
+      data={[
+        {
+          label: "Genres",
+          value: DEFAULT_VALUE,
+          children: dropdownItems,
+        },
+      ]}
+      value={selected}
+      onChange={(selected) => {
+        onChange(selected);
+      }}
+    />
   );
 }
 
