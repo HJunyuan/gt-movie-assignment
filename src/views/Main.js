@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Icon, IconButton, Panel } from "rsuite";
 import styled from "styled-components";
+import { isEqual } from "lodash";
 
 import { MovieContext } from "../contexts/MovieContext";
 
@@ -27,7 +28,7 @@ function Main() {
       <Panel
         className="my-4"
         header="Filters"
-        defaultExpanded={true}
+        defaultExpanded={false}
         collapsible
         bordered
       >
@@ -67,12 +68,10 @@ function Main() {
               yearStartEnd: [0, years.length - 1],
             });
           }}
-          disabled={
-            filterParams.genres === DEFAULT_GENRE &&
-            filterParams.yearStartEnd &&
-            filterParams.yearStartEnd[0] === 0 &&
-            filterParams.yearStartEnd[1] === years.length - 1
-          }
+          disabled={isEqual(filterParams, {
+            genres: DEFAULT_GENRE,
+            yearStartEnd: [0, years?.length - 1],
+          })}
         >
           Reset filters
         </IconButton>

@@ -6,7 +6,10 @@ const getMovies = async () => axios.get(ENDPOINT);
 
 const getMoviesRetry = async () => {
   return getMovies()
-    .then((response) => response.data)
+    .then((response) => {
+      console.log("Successfully retrieved data from API.");
+      return response.data;
+    })
     .catch((err) => {
       console.log(err);
       console.log("API unreachable. Retrying now...");
