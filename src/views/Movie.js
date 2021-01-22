@@ -5,10 +5,10 @@ import styled from "styled-components";
 import DOMPurify from "dompurify";
 import { formatDistance } from "date-fns";
 
+import { SEO } from "../components/SEO";
 import { MovieContext } from "../contexts/MovieContext";
-import generateGenreColour from "../utilities/genreColour";
-
 import { Container } from "../components/Container";
+import generateGenreColour from "../utilities/genreColour";
 
 function MovieView() {
   let { year, name } = useParams();
@@ -40,12 +40,13 @@ function MovieView() {
     return <Redirect to="/404" />;
   } else {
     /* Display Movie Details */
-    const { genre, synopsis, image } = movies.find(
+    const { genre, synopsis, synopsisShort, image } = movies.find(
       (movie) => movie.productionYear === year && movie.name === name
     );
 
     return (
       <Container>
+        <SEO title={`${name} (${year})`} description={synopsisShort} />
         <img
           alt={`${name} (${year})`}
           style={{
